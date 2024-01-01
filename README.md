@@ -36,16 +36,26 @@ Time Series Plot
 
 Geographical Map
 
-Features
+**Features**
 Data Analysis: Explore trends, patterns, and correlations in COVID-19 data.
-Visualization: Create interactive visualizations using Matplotlib, Plotly, and other libraries.
+
+
+**Visualization**:
+
+Create interactive visualizations using Matplotlib, Plotly, and other libraries.
 Dashboard: Utilize Tableau or Power BI to design an interactive and informative dashboard.
-Contributing
+
+
+**Contributing**
 Contributions are welcome! Feel free to fork the repository, create branches, and submit pull requests. Ensure that your contributions align with the project's goals and follow best practices.
 
 For major changes, please open an issue first to discuss potential changes.
 
-Acknowledgments
+
+**Acknowledgments**
+
 Johns Hopkins University for providing the COVID-19 dataset.
-License
+
+
+**License**
 This project is licensed under the MIT License.
