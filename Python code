@@ -1,0 +1,71 @@
+# Import necessary libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+from dash import Dash, html, dcc
+from dash.dependencies import Input, Output
+import plotly.express as px
+
+# Step 1: Data Collection
+url = "https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv"
+covid_data = pd.read_csv(url)
+
+# Step 2: Data Cleaning and Preprocessing
+# For simplicity, let's assume no significant data cleaning is needed.
+
+# Step 3: Exploratory Data Analysis (EDA)
+# For simplicity, let's assume no specific EDA is performed.
+
+# Step 4: Data Visualization
+# Example of time series plot
+plt.figure(figsize=(10, 6))
+covid_data['Date'] = pd.to_datetime(covid_data['Date'])
+plt.plot(covid_data.groupby('Date')['Confirmed'].sum(), label='Confirmed')
+plt.plot(covid_data.groupby('Date')['Deaths'].sum(), label='Deaths')
+plt.plot(covid_data.groupby('Date')['Recovered'].sum(), label='Recovered')
+plt.title('COVID-19 Global Statistics Over Time')
+plt.xlabel('Date')
+plt.ylabel('Count')
+plt.legend()
+plt.show()
+
+# Example of geographical map
+fig = px.scatter_geo(covid_data, 
+                     locations="Country/Region", 
+                     locationmode="country names",
+                     color="Confirmed",
+                     size="Confirmed",
+                     hover_name="Country/Region",
+                     title="Global COVID-19 Spread",
+                     projection="natural earth")
+fig.show()
+
+# Step 5: Dashboard Creation using Dash
+app = Dash(__name__)
+
+app.layout = html.Div(children=[
+    html.H1(children='COVID-19 Dashboard'),
+
+    dcc.Graph(
+        id='time-series-plot',
+        figure={
+            'data': [
+                {'x': covid_data['Date'], 'y': covid_data['Confirmed'], 'type': 'line', 'name': 'Confirmed'},
+                {'x': covid_data['Date'], 'y': covid_data['Deaths'], 'type': 'line', 'name': 'Deaths'},
+                {'x': covid_data['Date'], 'y': covid_data['Recovered'], 'type': 'line', 'name': 'Recovered'},
+            ],
+            'layout': {
+                'title': 'COVID-19 Global Statistics Over Time',
+                'xaxis': {'title': 'Date'},
+                'yaxis': {'title': 'Count'},
+            }
+        }
+    ),
+
+    dcc.Graph(
+        id='geo-map',
+        figure=fig
+    )
+])
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
